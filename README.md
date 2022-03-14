@@ -1,16 +1,19 @@
-# Vue 3 + Vite + Tailwind CSS
+# VUE 3 + Vite + Tailwind CSS
 
-Install Node.js if you don't already have it: https://nodejs.org/en/
+## Cliffs
+0. Install Node.js if you don't already have it
+1. `mkdir purge-game-app`
+2. `cd purge-game-app`
+3. `git init`
+4. `git remote add origin https://github.com/arctos-digital/purge-game-app.git`
+5. `git pull origin master`
+6. `npm install`
+7. `npm run dev`
 
-Install Vue with Vite & Tailwind per:
-https://tailwindcss.com/docs/guides/vite
+Node.js: https://nodejs.org/en/
 
-For framework, select plain vue (not TS)
+Vue 3: https://vuejs.org/
 
-After step 5 on the Tailwind page you can clone this repo and then `npm run dev`
+Vite: https://github.com/vitejs
 
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
-
-
+Tailwind CSS: https://tailwindcss.com/

@@ -9,15 +9,15 @@
 import { ref, reactive, computed, onMounted } from "vue";
 
 const traitData = ref(null);
-const columnSorted = ref("shape");
+const columnSorted = ref("color");
 const sortOrder = ref("asc");
 const filterString = ref("");
 // dataSource is expected to eventually be an API endpoint
 const dataSource = ref("/src/assets/dummy-data/traits.json");
 
 const columnStatus = reactive({
-  shape: true,
-  color: false,
+  shape: false,
+  color: true,
   total: false,
   remaining: false,
 });
@@ -71,11 +71,7 @@ async function fetchTraitData() {
 function sortByColumn(column) {
   columnSorted.value = column;
   Object.keys(columnStatus).forEach((key) => {
-    if (key == column) {
-      columnStatus[key] = true;
-    } else {
-      columnStatus[key] = false;
-    }
+    columnStatus[key] = key == column ? true : false;
   });
   sortOrder.value = sortOrder.value == "asc" ? "desc" : "asc";
 }
@@ -110,8 +106,12 @@ onMounted(() => {
         <table class="w-full">
           <thead class="sticky top-0 z-10 bg-black">
             <tr>
-              <th class="sticky top-0 z-10 border-b-2 border-amber-500">
-                &nbsp;
+              <th
+                @click="sortByColumn('color')"
+                :class="{ 'text-amber-500': columnStatus.color }"
+                class="sticky top-0 z-10 border-b-2 border-amber-500"
+              >
+                <button class="font-bold">Color</button>
               </th>
               <th
                 @click="sortByColumn('shape')"
@@ -120,12 +120,8 @@ onMounted(() => {
               >
                 <button class="font-bold">Trait</button>
               </th>
-              <th
-                @click="sortByColumn('color')"
-                :class="{ 'text-amber-500': columnStatus.color }"
-                class="sticky top-0 z-10 border-b-2 border-amber-500"
-              >
-                <button class="font-bold">Color</button>
+              <th class="sticky top-0 z-10 border-b-2 border-amber-500">
+                &nbsp;
               </th>
               <!-- Header for optional 'total' column -->
               <!-- <th
@@ -147,13 +143,13 @@ onMounted(() => {
           <tbody>
             <tr v-for="trait in filteredTraits">
               <td class="border-t border-amber-500 text-center">
-                <img :src="trait[1].imageUrl" class="inline w-1/2 py-1" />
+                {{ trait[1].color }}
               </td>
               <td class="border-t border-amber-500 text-center">
                 {{ trait[1].shape }}
               </td>
               <td class="border-t border-amber-500 text-center">
-                {{ trait[1].color }}
+                <img :src="trait[1].imageUrl" class="inline w-1/2 py-1" />
               </td>
               <!-- Optional 'total' column -->
               <!-- <td class="border-t border-amber-500 text-center">

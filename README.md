@@ -1,7 +1,19 @@
-# Vue 3 + Vite
+# VUE 3 + Vite + Tailwind CSS
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Cliffs
+0. Install Node.js if you don't already have it
+1. `mkdir purge-game-app`
+2. `cd purge-game-app`
+3. `git init`
+4. `git remote add origin https://github.com/arctos-digital/purge-game-app.git`
+5. `git pull origin master`
+6. `npm install`
+7. `npm run dev`
 
-## Recommended IDE Setup
+Node.js: https://nodejs.org/en/
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+Vue 3: https://vuejs.org/
+
+Vite: https://github.com/vitejs
+
+Tailwind CSS: https://tailwindcss.com/

@@ -26,10 +26,24 @@ const getAccounts = async () => {
   if (isMetaMaskInstalled()) {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     walletAddress.value = accounts[0] || null;
+    const chainId = await ethereum.request({ method: 'eth_chainId' });
+    if(chainId !== '0x1')
+    {
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x1' }],
+      });
+    }
   }
 };
 
+const handleChainChanged = (_chainId) => {
+  // We recommend reloading the page, unless you must do otherwise
+  window.location.reload();
+}
+
 const onboarding = new MetaMaskOnboarding();
+ethereum.on('chainChanged', handleChainChanged);
 
 const onClickInstall = () => {
   onboarding.startOnboarding();

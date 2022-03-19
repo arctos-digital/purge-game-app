@@ -19,11 +19,11 @@ const isMetaMaskInstalled = () => {
 };
 
 const getAccounts = async () => {
-  if (isMetaMaskInstalled()) {
+  if (isMetaMaskInstalled) {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     wallet.address = accounts[0] || null;
     const chainId = await ethereum.request({ method: "eth_chainId" });
-    if (chainId !== "0x1") {
+    if (chainId !== "0x4") {
       await ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x4" }],

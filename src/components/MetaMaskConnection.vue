@@ -2,13 +2,12 @@
   TO DO
   --------------------
   Error handling
-  Check for/switch to correct network
-  Move wallet button to parent component (walletAddress already exposed)
 -->
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import MetaMaskOnboarding from "@metamask/onboarding"; // https://docs.metamask.io/guide/onboarding-library.html
+import { wallet } from "../store.js";
 
 const isMetaMaskInstalled = () => {
   if (
@@ -19,19 +18,15 @@ const isMetaMaskInstalled = () => {
   }
 };
 
-const walletAddress = ref(null);
-defineExpose({ walletAddress });
-
 const getAccounts = async () => {
   if (isMetaMaskInstalled()) {
     const accounts = await ethereum.request({ method: "eth_accounts" });
-    walletAddress.value = accounts[0] || null;
-    const chainId = await ethereum.request({ method: 'eth_chainId' });
-    if(chainId !== '0x1')
-    {
+    wallet.address = accounts[0] || null;
+    const chainId = await ethereum.request({ method: "eth_chainId" });
+    if (chainId !== "0x1") {
       await ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x1' }],
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x4" }],
       });
     }
   }
@@ -40,10 +35,15 @@ const getAccounts = async () => {
 const handleChainChanged = (_chainId) => {
   // We recommend reloading the page, unless you must do otherwise
   window.location.reload();
-}
+};
+
+const handleAccountsChanged = () => {
+  window.location.reload();
+};
 
 const onboarding = new MetaMaskOnboarding();
-ethereum.on('chainChanged', handleChainChanged);
+ethereum.on("chainChanged", handleChainChanged);
+ethereum.on("accountsChanged", handleAccountsChanged);
 
 const onClickInstall = () => {
   onboarding.startOnboarding();
@@ -62,15 +62,14 @@ onMounted(() => {
 <template>
   <!-- Full screen modal if wallet not connected, else load main interface -->
   <div
-    v-if="!walletAddress"
+    v-if="!wallet.address"
     class="
       absolute
       top-0
       left-0
       w-full
       h-full
-      bg-black
-      opacity-70
+      bg-black bg-opacity-70
       grid
       place-content-center
     "
@@ -112,27 +111,5 @@ onMounted(() => {
         Install MetaMask
       </button>
     </div>
-  </div>
-  <!-- Wallet button, to be moved to parent component -->
-  <div
-    v-if="walletAddress"
-    class="
-      absolute
-      top-0
-      right-0
-      z-10
-      m-1
-      px-4
-      md:py-1
-      bg-black
-      rounded-md
-      hover:ring-2
-      ring-amber-500
-    "
-  >
-    <button @click="walletAddress = null">
-      <img src="/metamask-fox.svg" class="inline scale-75" />
-      {{ walletAddress.substring(0, 5) }}...{{ walletAddress.substring(38) }}
-    </button>
   </div>
 </template>

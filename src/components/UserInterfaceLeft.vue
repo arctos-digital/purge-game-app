@@ -1,7 +1,6 @@
 <!-- 
   TO DO
   --------------------
-  Fix CSS height sizing bug
   Error handling for fetch
 -->
 
@@ -68,7 +67,7 @@ async function fetchTraitData() {
   traitData.value = await (await fetch(dataSource.value)).json();
 }
 
-function sortByColumn(column) {
+function toggleColumnSorted(column) {
   columnSorted.value = column;
   Object.keys(columnStatus).forEach((key) => {
     columnStatus[key] = key == column ? true : false;
@@ -107,32 +106,32 @@ onMounted(() => {
           <thead class="sticky top-0 z-10 bg-black">
             <tr>
               <th
-                @click="sortByColumn('color')"
+                @click="toggleColumnSorted('color')"
                 :class="{ 'text-amber-500': columnStatus.color }"
                 class="sticky top-0 z-10 border-b-2 border-amber-500"
               >
                 <button class="font-bold">Color</button>
               </th>
               <th
-                @click="sortByColumn('shape')"
+                @click="toggleColumnSorted('shape')"
                 :class="{ 'text-amber-500': columnStatus.shape }"
                 class="sticky top-0 z-10 border-b-2 border-amber-500"
               >
-                <button class="font-bold">Trait</button>
+                <button class="font-bold">Symbol</button>
               </th>
               <th class="sticky top-0 z-10 border-b-2 border-amber-500">
                 &nbsp;
               </th>
               <!-- Header for optional 'total' column -->
               <!-- <th
-                @click="sortByColumn('total')"
+                @click="toggleColumnSorted('total')"
                 :class="{ 'text-amber-500': columnStatus.total }"
                 class="sticky top-0 z-10 border-b-2 border-amber-500"
               >
                 <button class="font-bold">Total</button>
               </th> -->
               <th
-                @click="sortByColumn('remaining')"
+                @click="toggleColumnSorted('remaining')"
                 :class="{ 'text-amber-500': columnStatus.remaining }"
                 class="sticky top-0 z-10 border-b-2 border-amber-500"
               >

@@ -13,8 +13,14 @@ import { ref, onMounted } from "vue";
 import UserInterfaceLeft from "./UserInterfaceLeft.vue";
 import UserInterfaceMiddle from "./UserInterfaceMiddle.vue";
 import UserInterfaceRight from "./UserInterfaceRight.vue";
+import { wallet } from "../store.js";
 
 const middleColumn = ref(null);
+
+const onClickDisconnect = () => {
+  // Fake disconnect, because MetaMask won't allow a real one from an app
+  wallet.address = null;
+};
 
 onMounted(() => {
   // Bring the middle column into view on page load. For small screens.
@@ -24,7 +30,27 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col h-screen overscroll-none">
-    <div class="static h-16 bg-black opacity-50">header</div>
+    <div class="static bg-black bg-opacity-50">
+      header
+      <button
+        @click="onClickDisconnect()"
+        class="
+          float-right
+          m-1
+          px-4
+          md:py-1
+          bg-black
+          rounded-md
+          hover:text-amber-400 hover:ring-1
+          ring-amber-500
+        "
+      >
+        <img src="/metamask-fox.svg" class="inline scale-75" />
+        {{ wallet.address.substring(0, 5) }}...{{
+          wallet.address.substring(38)
+        }}
+      </button>
+    </div>
     <div
       class="
         grow

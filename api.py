@@ -88,7 +88,7 @@ async def tokens(address: str):
         holderaddress = row[5]
         purgeaddress = row[6]
         purgetime = row[7]
-        image = row[11]
+        image = row[12]
         tokenId = row[0]
         tokendata[tokenId] = {}
         tokendata[tokenId]['tokenId'] = tokenId
